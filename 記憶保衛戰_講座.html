@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>記憶保衛戰：馬西屏的十年抗失智指南</title>
+<style>
+  :root {
+    --cream:  #FEF9F2;
+    --amber:  #D4843A;
+    --amber-l:#F0A85A;
+    --gold:   #C2791A;
+    --sage:   #5D8A63;
+    --rose:   #B84040;
+    --text:   #2E1A08;
+    --text-m: #6B4020;
+    --text-s: #9A6840;
+    --card:   #FFFFFF;
+    --border: rgba(180,120,60,0.15);
+    --sh:     0 4px 24px rgba(140,80,20,0.10);
+    --sh-h:   0 8px 36px rgba(140,80,20,0.18);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    background: var(--cream);
+    color: var(--text);
+    font-family: 'PingFang TC','Noto Sans TC',-apple-system,sans-serif;
+    line-height: 1.8;
+  }
+  body::before {
+    content:''; position:fixed; inset:0; pointer-events:none; z-index:0;
+    background:
+      radial-gradient(ellipse 80% 50% at 0% 0%, rgba(212,132,58,0.07) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 40% at 100% 100%, rgba(194,121,26,0.06) 0%, transparent 60%);
+  }
+
+  /* ── TOP BAR ── */
+  header {
+    position:sticky; top:0; z-index:100;
+    background:rgba(254,249,242,0.90); backdrop-filter:blur(18px);
+    border-bottom:1px solid var(--border);
+    box-shadow: 0 2px 14px rgba(140,80,20,0.07);
+    padding: 0 1.5rem;
+    display:flex; align-items:center; gap:1.2rem; height:58px;
+  }
+  .logo { font-size:1.1rem; font-weight:900; color:var(--gold); white-space:nowrap; }
+  .logo span { font-size:1.4rem; }
+  .nav-pills { display:flex; gap:.3rem; overflow-x:auto; flex:1; }
+  .nav-pills a {
+    font-size:.78rem; font-weight:600; color:var(--text-m);
+    padding:.28rem .75rem; border-radius:99px; white-space:nowrap;
+    text-decoration:none; transition:all .2s;
+  }
+  .nav-pills a:hover { background:rgba(212,132,58,0.12); color:var(--gold); }
+  .tag {
+    margin-left:auto;
+    background:linear-gradient(135deg,var(--amber),var(--gold));
+    color:#fff; font-size:.68rem; font-weight:700;
+    padding:.2rem .7rem; border-radius:99px; white-space:nowrap;
+    box-shadow:0 2px 8px rgba(212,132,58,0.35);
+  }
+
+  /* ── HERO ── */
+  .hero {
+    position:relative; z-index:1;
+    text-align:center; padding:5rem 1.5rem 3rem; max-width:820px; margin:0 auto;
+  }
+  .eyebrow {
+    display:inline-flex; align-items:center; gap:.4rem;
+    background:rgba(212,132,58,0.10); border:1px solid rgba(212,132,58,0.25);
+    color:var(--gold); border-radius:99px;
+    padding:.28rem 1rem; font-size:.8rem; font-weight:600; margin-bottom:1.5rem;
+  }
+  .hero h1 {
+    font-size:clamp(1.9rem,5vw,3.2rem); font-weight:900;
+    line-height:1.2; color:var(--text); margin-bottom:.5rem;
+  }
+  .hero h1 em {
+    font-style:normal;
+    background:linear-gradient(135deg,var(--amber),var(--gold));
+    -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+    background-clip:text;
+  }
+  .hero-desc { font-size:1rem; color:var(--text-m); max-width:560px; margin:.6rem auto 2.5rem; }
+  .hero-pills { display:flex; justify-content:center; flex-wrap:wrap; gap:.8rem; }
+  .hero-pill {
+    background:var(--card); border:1px solid var(--border);
+    border-radius:14px; padding:.9rem 1.4rem; text-align:center;
+    box-shadow:var(--sh); transition:transform .2s,box-shadow .2s; min-width:110px;
+  }
+  .hero-pill:hover { transform:translateY(-3px); box-shadow:var(--sh-h); }
+  .hero-pill .n {
+    font-size:1.7rem; font-weight:900; line-height:1;
+    background:linear-gradient(135deg,var(--amber),var(--gold));
+    -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+    background-clip:text;
+  }
+  .hero-pill .l { font-size:.75rem; color:var(--text-s); margin-top:.25rem; }
+
+  /* ── SLIDE SECTION ── */
+  .slides-wrap {
+    position:relative; z-index:1;
+    max-width:960px; margin:0 auto; padding:1rem 1.5rem 5rem;
+  }
+  .slide-block {
+    margin-bottom:4rem;
+    background:var(--card); border-radius:24px;
+    border:1px solid var(--border); box-shadow:var(--sh);
+    overflow:hidden; transition:box-shadow .25s;
+  }
+  .slide-block:hover { box-shadow:var(--sh-h); }
+
+  .slide-img { width:100%; display:block; border-bottom:1px solid var(--border); }
+
+  .slide-body { padding:1.8rem 2rem 2rem; }
+  .slide-num {
+    font-size:.68rem; font-weight:700; letter-spacing:.08em; color:var(--text-s);
+    text-transform:uppercase; margin-bottom:.5rem;
+  }
+  .slide-title {
+    font-size:1.25rem; font-weight:900; color:var(--text);
+    margin-bottom:1rem; line-height:1.3;
+  }
+  .slide-title em {
+    font-style:normal; color:var(--amber);
+  }
+
+  /* 要點列表 */
+  .points { list-style:none; display:flex; flex-direction:column; gap:.55rem; margin-bottom:1.2rem; }
+  .points li {
+    display:flex; align-items:flex-start; gap:.65rem;
+    font-size:.88rem; color:var(--text-m); line-height:1.65;
+  }
+  .points li .dot {
+    flex-shrink:0; width:22px; height:22px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    font-size:.75rem; margin-top:.15rem;
+  }
+
+  /* 重點框 */
+  .highlight-box {
+    border-radius:14px; padding:1rem 1.2rem;
+    font-size:.85rem; line-height:1.7;
+    border-left:4px solid;
+  }
+  .hb-amber { background:rgba(212,132,58,0.07); border-color:var(--amber); color:var(--text-m); }
+  .hb-sage  { background:rgba(93,138,99,0.07);  border-color:var(--sage);  color:var(--text-m); }
+  .hb-rose  { background:rgba(184,64,64,0.07);  border-color:var(--rose);  color:var(--text-m); }
+  .hb-gold  { background:rgba(194,121,26,0.08); border-color:var(--gold);  color:var(--text-m); }
+  .highlight-box strong { color:var(--text); }
+
+  /* 標籤 chips */
+  .chips { display:flex; flex-wrap:wrap; gap:.4rem; margin-top:1rem; }
+  .chip {
+    font-size:.7rem; font-weight:600; padding:.18rem .6rem;
+    border-radius:99px; border:1px solid;
+  }
+  .chip-amber { background:rgba(212,132,58,0.10); color:var(--amber); border-color:rgba(212,132,58,0.3); }
+  .chip-sage  { background:rgba(93,138,99,0.10);  color:var(--sage);  border-color:rgba(93,138,99,0.3); }
+  .chip-rose  { background:rgba(184,64,64,0.10);  color:var(--rose);  border-color:rgba(184,64,64,0.3); }
+
+  /* ── DIVIDER ── */
+  .chapter-divider {
+    position:relative; z-index:1;
+    max-width:960px; margin:0 auto 2rem; padding:0 1.5rem;
+    display:flex; align-items:center; gap:1rem;
+  }
+  .chapter-divider::before, .chapter-divider::after {
+    content:''; flex:1; height:1px; background:var(--border);
+  }
+  .chapter-divider span {
+    font-size:.75rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase;
+    color:var(--text-s); white-space:nowrap;
+    background:rgba(212,132,58,0.08); border:1px solid rgba(212,132,58,0.2);
+    padding:.25rem .9rem; border-radius:99px;
+  }
+
+  /* ── MUSIC ── */
+  .player {
+    position:fixed; bottom:1.4rem; right:1.4rem; z-index:200;
+    display:flex; align-items:center; gap:.7rem;
+    background:rgba(254,249,242,0.92); backdrop-filter:blur(20px);
+    border:1px solid rgba(212,132,58,0.2);
+    border-radius:99px; padding:.45rem .9rem .45rem .45rem;
+    box-shadow:0 6px 28px rgba(140,80,20,0.18);
+  }
+  .play-btn {
+    width:36px; height:36px; border-radius:50%;
+    background:linear-gradient(135deg,var(--amber),var(--gold));
+    border:none; cursor:pointer; color:#fff; font-size:.95rem;
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:0 3px 10px rgba(212,132,58,0.45);
+    transition:transform .2s, box-shadow .2s;
+  }
+  .play-btn:hover { transform:scale(1.12); }
+  .p-info { display:flex; flex-direction:column; gap:.05rem; }
+  .p-title { font-size:.75rem; font-weight:700; color:var(--text); }
+  .p-status { font-size:.65rem; color:var(--text-s); }
+  .p-vol {
+    -webkit-appearance:none; width:54px; height:4px;
+    border-radius:99px; background:rgba(180,120,60,0.18); outline:none; cursor:pointer;
+  }
+  .p-vol::-webkit-slider-thumb {
+    -webkit-appearance:none; width:12px; height:12px;
+    border-radius:50%; background:var(--amber);
+    box-shadow:0 1px 5px rgba(212,132,58,0.5);
+  }
+  @keyframes pulse {
+    0%,100%{box-shadow:0 3px 10px rgba(212,132,58,0.45),0 0 0 0 rgba(212,132,58,.5)}
+    50%{box-shadow:0 3px 10px rgba(212,132,58,0.45),0 0 0 8px rgba(212,132,58,0)}
+  }
+  .play-btn.on { animation:pulse 2s ease infinite; }
+
+  /* ── NARRATION 口白 ── */
+  .narration {
+    margin-top:1.4rem;
+    background:linear-gradient(135deg,rgba(255,248,230,0.85),rgba(255,253,245,0.95));
+    border-radius:14px; padding:1.1rem 1.4rem;
+    border:1px solid rgba(212,132,58,0.2);
+  }
+  .narration-label {
+    font-size:.62rem; font-weight:800; letter-spacing:.12em;
+    color:var(--amber); text-transform:uppercase;
+    margin-bottom:.55rem; display:flex; align-items:center; gap:.35rem;
+  }
+  .narration p {
+    font-size:.91rem; line-height:2; color:var(--text-m);
+    font-style:italic; margin:0;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    position:relative; z-index:1;
+    text-align:center; padding:2rem 1.5rem;
+    border-top:1px solid var(--border);
+    color:var(--text-s); font-size:.78rem;
+    background:rgba(254,249,242,0.6);
+  }
+  footer p + p { margin-top:.4rem; }
+
+  @media(max-width:600px){
+    header { padding:0 1rem; }
+    .slide-body { padding:1.2rem 1.2rem 1.5rem; }
+    .hero { padding:3.5rem 1rem 2rem; }
+    .slides-wrap { padding:1rem 1rem 5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="logo"><span>🧠</span> 記憶保衛戰</div>
+  <nav class="nav-pills">
+    <a href="#s1">封面</a>
+    <a href="#s3">超高齡海嘯</a>
+    <a href="#s4">14大地雷</a>
+    <a href="#s9">干預實證</a>
+    <a href="#s15">結語</a>
+  </nav>
+  <div class="tag">同梯讀書會</div>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="eyebrow">🔬 醫學實證・Edited by Masky Wang</div>
+  <h1>記憶保衛戰<br><em>馬西屏的十年抗失智指南</em></h1>
+  <p class="hero-desc">從腦斷片警訊到黃金預防守則，帶您一步步認識失智、對抗失智、守護記憶。</p>
+  <div class="hero-pills">
+    <div class="hero-pill"><div class="n">45%</div><div class="l">可預防失智比例</div></div>
+    <div class="hero-pill"><div class="n">14</div><div class="l">大危險因子</div></div>
+    <div class="hero-pill"><div class="n">20年</div><div class="l">黃金干預潛伏期</div></div>
+    <div class="hero-pill"><div class="n">7500步</div><div class="l">最佳防護步數</div></div>
+  </div>
+</div>
+
+<!-- SLIDES WRAP -->
+<div class="slides-wrap">
+
+  <!-- ① 封面 -->
+  <div class="slide-block" id="s1">
+    <img class="slide-img" src="slides/slide_01.jpg" alt="封面">
+    <div class="slide-body">
+      <div class="slide-num">01 · 封面</div>
+      <div class="slide-title">記憶保衛戰：<em>馬西屏的十年抗失智指南</em></div>
+      <ul class="points">
+        <li><span class="dot" style="background:rgba(212,132,58,0.15);color:var(--amber)">揭</span>【揭秘腦斷片】從博學名嘴到記憶危機的真實告白——親身經歷帶出失智的真實面貌</li>
+        <li><span class="dot" style="background:rgba(184,64,64,0.12);color:var(--rose)">直</span>【直擊危險因子】國際權威認證 14 大失智地雷——每一項都可能就發生在您身邊</li>
+        <li><span class="dot" style="background:rgba(93,138,99,0.12);color:var(--sage)">黃</span>【黃金預防守則】逆轉大腦退化的多重生活干預指南——從今天開始，一切都還來得及</li>
+      </ul>
+      <div class="narration">
+        <div class="narration-label">🎙 口白</div>
+        <p>歲月靜好，但記憶有時卻如指縫間的流沙，悄悄流逝。當我們走過人生大半個年頭，累積了無數珍貴的風景，才猛然發覺，最令人畏懼的不是軀體的衰老，而是遺忘。這不僅是一場與時間的賽跑，更是為了守護我們一生摯愛的記憶保衛戰。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ② 腦斷片 -->
+  <div class="slide-block" id="s2">
+    <img class="slide-img" src="slides/slide_02.jpg" alt="名嘴的失憶警訊">
+    <div class="slide-body">
+      <div class="slide-num">02 · 警訊篇</div>
+      <div class="slide-title">名嘴的失憶警訊：<em>當大腦突然「斷片」</em></div>
+      <ul class="points">
+        <li><span class="dot" style="background:rgba(184,64,64,0.12);color:var(--rose)">⚠</span><strong>近期記憶喪失</strong>：剛看完的電影，回家後腦中竟一片空白——不是「記性不好」，而是大腦在發出求救訊號</li>
+        <li><span class="dot" style="background:rgba(212,132,58,0.15);color:var(--amber)">⚠</span><strong>指物命名困難</strong>：指著冰箱裡的蛋塔，卻只能叫出「那個」——語言中樞開始出現微小損傷</li>
+        <li><span class="dot" style="background:rgba(93,138,99,0.12);color:var(--sage)">⚠</span><strong>長期記憶斷層</strong>：從小熟記的唐詩瞬間遺忘，床頭書無法接續——海馬迴正在悄悄萎縮</li>
+      </ul>
+      <div class="highlight-box hb-amber">
+        💡 <strong>溫馨提醒</strong>：偶爾忘記名字之後想起來屬正常老化；若是持續性、進行性的記憶流失，應儘快就醫評估。
+      </div>
+      <div class="chips">
+        <span class="chip chip-rose">早期警訊</span>
+        <span class="chip chip-amber">及早就醫</span>
+      </div>
+      <div class="narration">
+        <div class="narration-label">🎙 口白</div>
+        <p>有時候，警訊來得無聲無息。或許是剛看完一場動人的電影，轉身回家，腦海裡卻是一片空白；或許是打開冰箱，指著熟悉的蛋塔，千言萬語卻只剩下一句「那個」。甚至，那些從小倒背如流的唐詩、床頭翻閱過無數次的書頁，都在某個瞬間徹底斷層。這不是單純的累了，這是大腦在向我們微弱地求救。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ③ 超高齡海嘯 -->
+  <div class="chapter-divider" id="s3"><span>🌊 超高齡海嘯篇</span></div>
+  <div class="slide-block">
+    <img class="slide-img" src="slides/slide_03.jpg" alt="超高齡海嘯">
+    <div class="slide-body">
+      <div class="slide-num">03 · 台灣現況</div>
+      <div class="slide-title">超高齡海嘯與大腦的 <em>20 年無聲戰爭</em></div>
+      <ul class="points">
+        <li><span class="dot" style="background:rgba(184,64,64,0.12);color:var(--rose)">⏰</span><strong>倒數計時</strong>：台灣 2025 年進入超高齡社會，老化速度世界第一——每 4 位老人就有 1 位將面臨失智風險</li>
+        <li><span class="dot" style="background:rgba(212,132,58,0.15);color:var(--amber)">📈</span><strong>盛行率飆升</strong>：65 歲以上失智達 8%（預計十年翻倍），女性高於男性</li>
+        <li><span class="dot" style="background:rgba(93,138,99,0.12);color:var(--sage)">🕐</span><strong>20 年黃金干預期</strong>：「類澱粉蛋白」斑塊堆積至發病具 20 年潛伏期——這 20 年就是我們的機會</li>
+      </ul>
+      <div class="highlight-box hb-sage">
+        🌱 <strong>關鍵洞見</strong>：失智症並非老化必然結果，而是一種「可提早防範的退化性疾病」。現在採取行動，就是送給未來自己最珍貴的禮物。
+      </div>
+      <div class="narration">
+        <div class="narration-label">🎙 口白</div>
+        <p>時間的沙漏不曾停歇，我們所在的這塊土地，即將迎來超高齡的浪潮，老化速度位居世界第一。當我們看著那些腦神經元逐漸凋零，其實這場無聲的戰爭早在發病前二十年就已經悄悄開打。類澱粉蛋白在腦中日復一日地堆積，這漫長的二十年，是大腦給我們的最後寬容，也是我們唯一能逆轉局勢的黃金干預期。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ④ 14大危險因子 -->
+  <div class="chapter-divider" id="s4"><span>⚠️ 14 大危險因子</span></div>
+  <div class="slide-block">
+    <img class="slide-img" src="slides/slide_04.jpg" alt="14大危險因子">
+    <div class="slide-body">
+      <div class="slide-num">04 · 科學依據</div>
+      <div class="slide-title">權威認證：消除 <em>14 項地雷</em>，阻斷 45% 發生率</div>
+      <ul class="points">
+        <li><span class="dot" style="background:rgba(212,132,58,0.15);color:var(--amber)">📋</span><strong>國際指標</strong>：《刺胳針》（Lancet）2024 年發布 14 項導致失智的危險因子</li>
+        <li><span class="dot" style="background:rgba(93,138,99,0.12);color:var(--sage)">🔬</span><strong>驚人成效</strong>：研究證實，只要精準去除這些干預因子，就能顯著降低風險</li>
+        <li><span class="dot" style="background:rgba(184,64,64,0.12);color:var(--rose)">📊</span><strong>預防數據</strong>：可預防或延緩高達 <strong style="color:var(--rose);font-size:1.1rem">45%</strong> 的失智發生率</li>
+      </ul>
+      <div class="highlight-box hb-gold">
+        🏆 <strong>核心信念</strong>：幾乎有一半的失智症是可以預防的！這不是天方夜譚，而是頂尖醫學期刊的科學實證。
+      </div>
+      <div class="narration">
+        <div class="narration-label">🎙 口白</div>
+        <p>醫學界曾給出一絲曙光。權威期刊《刺胳針》明白地列出了十四項導致失智的危險地雷。研究告訴我們一個平靜卻有力量的事實：只要我們願意轉念，精準地拆除這些生活中的干預因子，就能夠將高達百分之四十五的失智發生率，硬生生地擋在門外。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑤ 聽力視力壞膽固醇 -->
+  <div class="slide-block" id="s5">
+    <img class="slide-img" src="slides/slide_05.jpg" alt="聽力視力壞膽固醇">
+    <div class="slide-body">
+      <div class="slide-num">05 · 危險因子（一）</div>
+      <div class="slide-title">榜首警報：<em>聽力／視力衰退</em>與壞膽固醇</div>
+      <ul class="points">
+        <li><span class="dot" style="background:rgba(184,64,64,0.12);color:var(--rose)">👂</span><strong>危險第一名：聽力下降</strong>——年輕人戴耳機重低音者潛在高危群！聽力受損造成社交隔離，大腦刺激減少</li>
+        <li><span class="dot" style="background:rgba(212,132,58,0.15);color:var(--amber)">🩸</span><strong>並列第一：壞膽固醇（LDL）</strong>——低密度膽固醇過高最新證實為同等威脅，與澱粉樣蛋白沉積直接相關</li>
+        <li><span class="dot" style="background:rgba(93,138,99,0.12);color:var(--sage)">👁️</span><strong>視力與三高</strong>：視神經極近腦神經；積極控制三高與糖尿病能大幅降低風險</li>
+      </ul>
+      <div class="highlight-box hb-amber">
+        👓 <strong>行動建議</strong>：定期檢查聽力與視力，該配助聽器就配、該戴眼鏡就戴；每年抽血追蹤膽固醇，必要時配合飲食或藥物控制。
+      </div>
+      <div class="chips">
+        <span class="chip chip-rose">聽力損失 PAF≈7%</span>
+        <span class="chip chip-amber">高LDL PAF≈7%</span>
+        <span class="chip chip-sage">視力損失 PAF≈2%</span>
+      </div>
+      <div class="narration">
+        <div class="narration-label">🎙 口白</div>
+        <p>有些危機，藏在我們習以為常的細節裡。誰能想到，聽力的衰退，竟是侵蝕大腦的第一名殺手，而年輕時習慣戴耳機聽重低音，早就埋下了潛在的高危險群因子。血液中過高的壞膽固醇，也在最新的研究中與聽力並列為最大的威脅。加上視力退化與三高的侵襲，這些感官與血管的損傷，都在不知不覺中切斷了腦神經與世界的連結，因此積極控制三高與糖尿病便顯得格外重要。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑥ 不學習早退休缺牙 -->
+  <div class="slide-block" id="s6">
+    <img class="slide-img" src="slides/slide_06.jpg" alt="不學習早退休缺牙">
+    <div class="slide-body">
+      <div class="slide-num">06 · 危險因子（二）</div>
+      <div class="slide-title">停止運作的代價：<em>不學習、早退休與缺牙</em></div>
+      <ul class="points">
+        <li><span class="dot" style="background:rgba(184,64,64,0.12);color:var(--rose)">📚</span><strong>大腦停滯風險</strong>：「不學習」為第二大風險；60 歲提早退休者嚴重度高出 43%——大腦需要持續的認知挑戰</li>
+        <li><span class="dot" style="background:rgba(212,132,58,0.15);color:var(--amber)">🦷</span><strong>意想不到的警訊</strong>：全口牙齒少於 20 顆，失智風險大幅提升——咀嚼會刺激大腦血流</li>
+        <li><span class="dot" style="background:rgba(93,138,99,0.12);color:var(--sage)">⚡</span><strong>咀嚼的力量</strong>：缺牙致失智機率暴增 5 倍以上（日本推行「8020 計畫」：80 歲保有 20 顆牙）</li>
+      </ul>
+      <div class="highlight-box hb-sage">
+        🎓 <strong>行動建議</strong>：退休不等於停止學習——加入讀書會、學語言、學樂器；好好保護牙齒，缺牙及時裝假牙，讓大腦持續動起來！
+      </div>
+      <div class="chips">
+        <span class="chip chip-rose">教育程度不足 PAF≈5%</span>
+        <span class="chip chip-amber">持續學習保護大腦</span>
+      </div>
+      <div class="narration">
+        <div class="narration-label">🎙 口白</div>
+        <p>生命是一條流動的河，一旦停止，水就濁了。當我們不再學習，大腦便會面臨第二大風險的停滯危機；而若選擇在六十歲提早退休，失智的嚴重程度甚至會高出百分之四十三。甚至，連我們口中的牙齒都息息相關，當全口牙齒少於二十顆，失去咀嚼的刺激，失智機率將暴增五倍以上。保持咀嚼，保持學習，就是在告訴大腦，我們還熱愛著生活。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑦ 失眠孤獨 -->
+  <div class="slide-block" id="s7">
+    <img class="slide-img" src="slides/slide_07.jpg" alt="失眠毒害與孤獨老人">
+    <div class="slide-body">
+      <div class="slide-num">07 · 危險因子（三）</div>
+      <div class="slide-title">失眠的毒害與<em>「孤獨老人」危機</em></div>
+      <ul class="points">
+        <li><span class="dot" style="background:rgba(184,64,64,0.12);color:var(--rose)">😴</span><strong>洗腦機制停擺</strong>：深層睡眠利用脊髓液清除類澱粉蛋白，失眠與安眠藥直接傷腦細胞——睡眠是大腦每晚的「大掃除」</li>
+        <li><span class="dot" style="background:rgba(212,132,58,0.15);color:var(--amber)">😰</span><strong>心理毒素</strong>：長期壓力、恐慌症與憂鬱症直接損傷腦部——皮質醇升高會加速海馬迴萎縮</li>
+        <li><span class="dot" style="background:rgba(93,138,99,0.12);color:var(--sage)">🧍</span><strong>社交孤立</strong>：缺乏互動的「孤獨老人」大腦靜止，為誘發失智首要危險因子之一</li>
+      </ul>
+      <div class="highlight-box hb-amber">
+        🌙 <strong>行動建議</strong>：每晚 7–8 小時高品質睡眠；積極治療睡眠呼吸中止症；避免長期服用安眠藥；保持豐富的社交生活，不讓自己孤立。
+      </div>
+      <div class="chips">
+        <span class="chip chip-rose">社交孤立 PAF≈5%</span>
+        <span class="chip chip-amber">憂鬱症 PAF≈2%</span>
+        <span class="chip chip-sage">睡眠管理至關重要</span>
+      </div>
+      <div class="narration">
+        <div class="narration-label">🎙 口白</div>
+        <p>夜晚，本該是大腦自我修復的靜謐時光。深層的睡眠，能喚醒大腦利用脊髓液清除類澱粉蛋白的洗腦機制；然而，失眠與過度依賴安眠藥，卻粗暴地傷害了腦細胞。比失眠更痛的，是心靈的孤絕。缺乏互動的孤單老人，會讓大腦陷入死寂，成為誘發失智的首要危險因子，而長期的生活壓力、恐慌症與憂鬱症，也如同無形的毒素，一點一滴地直接損傷神經元。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑧ 空汙塑膠外傷 -->
+  <div class="slide-block" id="s8">
+    <img class="slide-img" src="slides/slide_08.jpg" alt="空汙塑膠微粒頭部外傷">
+    <div class="slide-body">
+      <div class="slide-num">08 · 危險因子（四）</div>
+      <div class="slide-title">躲不開的威脅：<em>空汙、塑膠微粒與頭部外傷</em></div>
+      <ul class="points">
+        <li><span class="dot" style="background:rgba(184,64,64,0.12);color:var(--rose)">🌫️</span><strong>空氣殺手</strong>：PM2.5 微粒會直接進入腦部，引發神經炎症與退化——空汙嚴重時減少戶外活動</li>
+        <li><span class="dot" style="background:rgba(212,132,58,0.15);color:var(--amber)">🥤</span><strong>超級殺手：塑膠微粒</strong>——強烈建議避免用塑膠袋裝熱湯、紙杯裝熱咖啡！微塑膠已在人類大腦中被發現</li>
+        <li><span class="dot" style="background:rgba(93,138,99,0.12);color:var(--sage)">🪖</span><strong>物理重擊</strong>：嚴防撞擊頭部意外，外傷會直接引發大腦退化——騎車戴安全帽、防止老人跌倒</li>
+      </ul>
+      <div class="highlight-box hb-rose">
+        ♻️ <strong>即刻行動</strong>：改用陶瓷杯、玻璃杯喝熱飲；不用塑膠袋裝熱食；空汙高峰戴口罩；家中老人做好防跌措施。
+      </div>
+      <div class="chips">
+        <span class="chip chip-rose">空氣污染 PAF≈3%</span>
+        <span class="chip chip-amber">頭部外傷 PAF≈3%</span>
+      </div>
+      <div class="narration">
+        <div class="narration-label">🎙 口白</div>
+        <p>走出戶外，我們依然需要保持警覺。空氣中懸浮的 PM2.5 微粒，會直接進入腦部引發退化；而為了貪圖方便，用塑膠袋裝熱湯、紙杯裝熱咖啡所溶出的超級殺手塑膠微粒，更是我們強烈建議避免的日常地雷。就連一次不經意的跌倒意外，造成頭部外傷，都可能成為直接引發大腦退化的導火線。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑨ 多重干預實證 -->
+  <div class="chapter-divider" id="s9"><span>🛡️ 黃金干預篇</span></div>
+  <div class="slide-block">
+    <img class="slide-img" src="slides/slide_09.jpg" alt="多重生活干預實證">
+    <div class="slide-body">
+      <div class="slide-num">09 · 干預實證</div>
+      <div class="slide-title">多重生活干預：<em>哈佛與芬蘭的防護實證</em></div>
+      <ul class="points">
+        <li><span class="dot" style="background:rgba(93,138,99,0.12);color:var(--sage)">🇫🇮</span><strong>芬蘭兩年期實證（FINGER Trial）</strong>：改變多重生活型態，能有效延緩失智症狀——認知衰退降低 25%</li>
+        <li><span class="dot" style="background:rgba(212,132,58,0.15);color:var(--amber)">🇺🇸</span><strong>哈佛 43 年追蹤</strong>：日常作息與生活習慣的防護力勝過一切——持之以恆比任何單一療法都有效</li>
+        <li><span class="dot" style="background:rgba(184,64,64,0.12);color:var(--rose)">💡</span><strong>核心理念</strong>：失智非單純老化，而是可提早防範的「記憶保衛戰」——多管齊下才是王道</li>
+      </ul>
+      <div class="highlight-box hb-sage">
+        🌿 <strong>關鍵洞見</strong>：沒有任何一種「神藥」能預防失智，但整合運動、飲食、認知訓練、社交、睡眠五大策略，威力遠超過任何單一療法。
+      </div>
+      <div class="narration">
+        <div class="narration-label">🎙 口白</div>
+        <p>面對這些挑戰，我們並非束手無策。來自哈佛大學四十三年的長期追蹤，以及芬蘭兩年期的實證研究都告訴我們，真正的防護傘不是奇蹟，而是改變多重生活型態。日常作息與生活習慣的防護力勝過一切，這是一場可以提早防範的記憶保衛戰，而非單純的老化宿命。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑩ 步伐魔法 -->
+  <div class="slide-block" id="s10">
+    <img class="slide-img" src="slides/slide_10.jpg" alt="步伐魔法健走">
+    <div class="slide-body">
+      <div class="slide-num">10 · 運動篇</div>
+      <div class="slide-title">步伐的魔法：<em>每天 15 分鐘的抗失智健走</em></div>
+      <ul class="points">
+        <li><span class="dot" style="background:rgba(93,138,99,0.12);color:var(--sage)">👟</span><strong>防護步數密碼</strong>：一萬步保心臟；防失智需累積 3000 步；<strong style="color:var(--sage)">7500 步達最佳效益（延緩 7 年！）</strong></li>
+        <li><span class="dot" style="background:rgba(212,132,58,0.15);color:var(--amber)">⏱️</span><strong>關鍵訣竅</strong>：每次必須「連續健走 15 分鐘」才具備啟動大腦防護的效力——分段走效果打折</li>
+      </ul>
+      <div class="highlight-box hb-sage">
+        🏃 <strong>今天就開始</strong>：飯後散步 15 分鐘、搭大眾運輸提早一站下車、把電梯換成爬樓梯——每一步都是送給大腦的保護。
+      </div>
+      <div class="chips">
+        <span class="chip chip-sage">身體不活動 PAF≈2%</span>
+        <span class="chip chip-amber">每天7500步</span>
+        <span class="chip chip-rose">連續15分鐘</span>
+      </div>
+      <div class="narration">
+        <div class="narration-label">🎙 口白</div>
+        <p>每天給自己一段專屬的步行時光吧。日行一萬步是為了保護心臟，但若要防範失智，我們需要累積三千步，走到七千五百步便能達到延緩七年的最佳效益。重點不在於追求極致的數字，而是一份堅持，每次必須連續健走十五分鐘，才具備啟動大腦防護效力的魔法。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑪ 活化神經元 -->
+  <div class="slide-block" id="s11">
+    <img class="slide-img" src="slides/slide_11.jpg" alt="活化神經元遊戲社交">
+    <div class="slide-body">
+      <div class="slide-num">11 · 認知社交篇</div>
+      <div class="slide-title">活化神經元：<em>深思熟慮的遊戲與人群互動</em></div>
+      <ul class="points">
+        <li><span class="dot" style="background:rgba(212,132,58,0.15);color:var(--amber)">🀄</span><strong>高階腦力激盪</strong>：參與打橋牌、下棋、麻將等需要深思熟慮的活動，強效活化神經元——這些不是「在玩」，是在健腦！</li>
+        <li><span class="dot" style="background:rgba(93,138,99,0.12);color:var(--sage)">👥</span><strong>拓展社交圈</strong>：參加長青大學或社區社團——像我們的同梯讀書會，就是最好的大腦保養！</li>
+        <li><span class="dot" style="background:rgba(184,64,64,0.12);color:var(--rose)">🤝</span><strong>雙重效益</strong>：保持與人互動交流，維持大腦高速運作，擊退孤立感</li>
+      </ul>
+      <div class="highlight-box hb-amber">
+        🎲 <strong>溫馨一語</strong>：「孤獨是失智的溫床，連結是記憶的守護者」——每一次讀書會的相聚，都是大腦最好的滋養。
+      </div>
+      <div class="narration">
+        <div class="narration-label">🎙 口白</div>
+        <p>我們的腦神經元，渴望著被挑戰與被需要。閒暇時，不妨找三五好友下棋、打麻將或是玩橋牌，在這些需要深思熟慮的高階腦力激盪中，神經元會再次強效活化起來。走入人群，參加長青大學或社區的社團，那份真摯的互動交流，能擊退孤立的寒意，讓大腦維持在雙重效應的高速運轉狀態。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑫ 飲食咖啡茶 -->
+  <div class="slide-block" id="s12">
+    <img class="slide-img" src="slides/slide_12.jpg" alt="地中海飲食咖啡茶">
+    <div class="slide-body">
+      <div class="slide-num">12 · 飲食篇</div>
+      <div class="slide-title">每日精華：<em>地中海飲食與茶、咖啡的保護力</em></div>
+      <ul class="points">
+        <li><span class="dot" style="background:rgba(212,132,58,0.15);color:var(--amber)">☕</span><strong>護腦飲品</strong>：每天喝咖啡延緩 18% 風險（勿超過 3 杯免失眠），喝茶延緩 14%——早上一杯咖啡是大腦的禮物！</li>
+        <li><span class="dot" style="background:rgba(93,138,99,0.12);color:var(--sage)">🫒</span><strong>地中海飲食</strong>：多攝取魚類、蔬菜，必用優良初榨橄欖油——Omega-3 是神經細胞的建材</li>
+        <li><span class="dot" style="background:rgba(184,64,64,0.12);color:var(--rose)">⚖️</span><strong>體重控制</strong>：積極改善肥胖，減少大腦發炎與退化——BMI 過高與海馬迴萎縮直接相關</li>
+      </ul>
+      <div class="highlight-box hb-sage">
+        🥗 <strong>每日飲食口訣</strong>：多蔬果、多魚、橄欖油；適量咖啡或綠茶；少紅肉、少糖、少加工食品。地中海飲食，就是大腦的頂級保養品。
+      </div>
+      <div class="chips">
+        <span class="chip chip-amber">咖啡護腦 -18%</span>
+        <span class="chip chip-sage">茶護腦 -14%</span>
+        <span class="chip chip-rose">肥胖 PAF≈1%</span>
+      </div>
+      <div class="narration">
+        <div class="narration-label">🎙 口白</div>
+        <p>餐桌上的選擇，也是愛護自己的一種方式。多攝取魚類、蔬菜，並必用優良初榨橄欖油的地中海飲食，能讓身體減少大腦發炎與退化，同時也要積極改善肥胖問題。每天早晨一杯醇厚的咖啡，或是午後一壺清香的好茶，不僅是生活中的小確幸，更是能延緩百分之十四到十八風險的護腦飲品，只要記得咖啡勿逾三杯以免失眠即可。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑬ 科技突破 -->
+  <div class="chapter-divider" id="s13"><span>🔬 醫學前沿篇</span></div>
+  <div class="slide-block">
+    <img class="slide-img" src="slides/slide_13.jpg" alt="科技突破抽血檢驗">
+    <div class="slide-body">
+      <div class="slide-num">13 · 醫學前沿</div>
+      <div class="slide-title">科技突破：<em>從正子攝影到抽血檢驗</em></div>
+      <ul class="points">
+        <li><span class="dot" style="background:rgba(184,64,64,0.12);color:var(--rose)">🏥</span><strong>傳統門檻</strong>：以往早期檢測需依賴極為昂貴的正子攝影（PET）——費用動輒數萬元，難以普及</li>
+        <li><span class="dot" style="background:rgba(93,138,99,0.12);color:var(--sage)">🩸</span><strong>最新技術進展</strong>：已發展出透過「抽血」即可進行早期大腦檢測的技術——血液中的 Aβ42/40 比值是關鍵指標</li>
+        <li><span class="dot" style="background:rgba(212,132,58,0.15);color:var(--amber)">🎯</span><strong>防禦意義</strong>：大幅降低檢測門檻，精確捕捉 20 年的黃金潛伏期——讓早期干預成為可能</li>
+      </ul>
+      <div class="highlight-box hb-gold">
+        🔬 <strong>醫學曙光</strong>：早期血液檢測技術將改變失智防治格局。若有家族史或高風險因子，不妨與主治醫師討論是否進行相關篩檢。
+      </div>
+      <div class="narration">
+        <div class="narration-label">🎙 口白</div>
+        <p>時代的進步，也為我們帶來了新的希望。過去，想早期檢測大腦的異狀，必須仰賴極為昂貴的正子攝影；如今，科技的進展讓我們透過簡單的抽血，就能大幅降低檢測門檻，精準捕捉到發病前那二十年的黃金潛伏期。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑭ 新藥兩面刃 -->
+  <div class="slide-block" id="s14">
+    <img class="slide-img" src="slides/slide_14.jpg" alt="新藥單株抗體">
+    <div class="slide-body">
+      <div class="slide-num">14 · 醫療現況</div>
+      <div class="slide-title">新藥的兩面刃：<em>單株抗體與副作用風險</em></div>
+      <ul class="points">
+        <li><span class="dot" style="background:rgba(93,138,99,0.12);color:var(--sage)">💉</span><strong>新興解方</strong>：新型單株抗體藥物能清除腦內「類澱粉蛋白斑塊」——lecanemab、donanemab 已獲部分核准</li>
+        <li><span class="dot" style="background:rgba(184,64,64,0.12);color:var(--rose)">💰</span><strong>沉重負擔</strong>：治療費用極其高昂（約新台幣 150 萬元）——健保尚未給付，家庭負擔極重</li>
+        <li><span class="dot" style="background:rgba(212,132,58,0.15);color:var(--amber)">⚠️</span><strong>潛在風險</strong>：伴隨引發腦出血或腦水腫等嚴重副作用的風險——需嚴格評估適用對象</li>
+      </ul>
+      <div class="highlight-box hb-amber">
+        ⚖️ <strong>冷靜看待</strong>：新藥是希望，但目前仍非萬靈丹。在真正安全有效的療法普及前，最好的「藥方」依然是——落實每天的生活干預。
+      </div>
+      <div class="narration">
+        <div class="narration-label">🎙 口白</div>
+        <p>科學的腳步從未停歇，新藥帶來了希望的曙光，但我們也必須保持冷靜。在等待醫學突破的同時，最有力的武器始終握在我們自己手中——那就是每一天落實的生活選擇，每一個守護大腦的好習慣。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑮ 結語 -->
+  <div class="chapter-divider" id="s15"><span>🌟 行動呼籲</span></div>
+  <div class="slide-block">
+    <img class="slide-img" src="slides/slide_15.jpg" alt="守護大腦結語">
+    <div class="slide-body">
+      <div class="slide-num">15 · 結語</div>
+      <div class="slide-title"><em>守護大腦，從落實生活干預做起</em></div>
+      <ul class="points">
+        <li><span class="dot" style="background:rgba(93,138,99,0.12);color:var(--sage)">🔄</span><strong>翻轉觀念</strong>：失智不再是單純老化，而是可提早防範的退化性疾病——接受這個觀念，就踏出了最重要的第一步</li>
+        <li><span class="dot" style="background:rgba(212,132,58,0.15);color:var(--amber)">🛡️</span><strong>防線建立</strong>：避開 14 大危險因子，實踐規律健走、動腦社交與健康飲食</li>
+        <li><span class="dot" style="background:rgba(184,64,64,0.12);color:var(--rose)">❤️</span><strong>終極呼籲</strong>：積極落實多重生活干預策略，守護自我與家人的珍貴記憶</li>
+      </ul>
+      <div class="highlight-box hb-sage" style="text-align:center;font-size:.95rem;padding:1.4rem 1.6rem">
+        🌸 <strong>「每一個今天的好習慣，都是明天記憶的守護者。」</strong><br>
+        <span style="font-size:.82rem;margin-top:.4rem;display:block">感謝一起參與同梯讀書會，讓我們攜手守護彼此的大腦健康。</span>
+      </div>
+      <div class="narration">
+        <div class="narration-label">🎙 口白</div>
+        <p>記憶，是我們與世界連結最深的橋樑。守護它，不需要等待奇蹟，只需要從今天起，邁開步伐、拿起書本、端起那杯咖啡，然後——好好珍惜每一次與所愛之人相聚的當下。這一場記憶保衛戰，我們一起打，一起贏。</p>
+      </div>
+    </div>
+  </div>
+
+</div><!-- end slides-wrap -->
+
+<!-- MUSIC PLAYER -->
+<div class="player">
+  <button class="play-btn" id="pBtn" onclick="togglePlay()">▶</button>
+  <div class="p-info">
+    <div class="p-title">記憶之路</div>
+    <div class="p-status" id="pStatus">點擊播放</div>
+  </div>
+  <input class="p-vol" type="range" min="0" max="1" step="0.05" value="0.35" oninput="setVol(this.value)">
+</div>
+<audio id="bgAudio" loop>
+  <source src="记忆之路 (1).mp3" type="audio/mpeg">
+</audio>
+
+<!-- FOOTER -->
+<footer>
+  <p>📚 本講座內容整理自《記憶保衛戰》· 主講：馬西屏 · Edited by Masky Wang · NotebookLM</p>
+  <p>參考依據：Lancet Commission on Dementia 2024 · FINGER Trial · Harvard Medical School</p>
+  <p style="margin-top:.6rem;color:var(--amber)">同梯讀書會 · 失智預防學習館 · 僅供學術討論，醫療決策請諮詢專業醫師</p>
+</footer>
+
+<script>
+// 平滑滾動
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const el = document.querySelector(a.getAttribute('href'));
+    if (el) el.scrollIntoView({ behavior:'smooth', block:'start' });
+  });
+});
+
+// 音樂播放
+const audio = document.getElementById('bgAudio');
+const btn   = document.getElementById('pBtn');
+const stat  = document.getElementById('pStatus');
+audio.volume = 0.35;
+
+function togglePlay() {
+  if (audio.paused) {
+    audio.play().then(() => {
+      btn.textContent = '⏸'; btn.classList.add('on'); stat.textContent = '播放中…';
+    }).catch(() => stat.textContent = '無法播放');
+  } else {
+    audio.pause(); btn.textContent = '▶'; btn.classList.remove('on'); stat.textContent = '已暫停';
+  }
+}
+function setVol(v) { audio.volume = parseFloat(v); }
+</script>
+</body>
+</html>
