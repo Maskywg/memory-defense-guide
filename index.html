@@ -1,0 +1,1050 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>記憶保衛戰 — 守護大腦知識館</title>
+<style>
+  :root {
+    --brain: #d97830;
+    --brain-light: #f4a85c;
+    --brain-dark: #b05e20;
+    --teal: #c8643c;
+    --teal-light: #f09870;
+    --amber: #e0b440;
+    --rose: #d85050;
+    --emerald: #90b870;
+    --slate: #3e2410;
+    --slate-mid: #523016;
+    --slate-light: #9a7a5a;
+    --bg: #3a2010;
+    --card: #4e2c14;
+    --card-hover: #5e3820;
+    --border: rgba(240,200,160,0.18);
+    --text: #fff4e8;
+    --text-muted: #d4b090;
+    --glow: 0 0 40px rgba(217,120,48,0.25);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'PingFang TC', 'Noto Sans TC', -apple-system, sans-serif;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ── Animated background ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 40% at 20% 10%, rgba(194,105,42,0.12) 0%, transparent 70%),
+      radial-gradient(ellipse 50% 40% at 80% 90%, rgba(184,92,56,0.08) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── Nav ── */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(28,16,8,0.85);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    display: flex; align-items: center; gap: 2rem;
+    height: 60px;
+  }
+  .nav-logo {
+    display: flex; align-items: center; gap: .6rem;
+    font-weight: 700; font-size: 1rem; color: var(--brain-light);
+    text-decoration: none; white-space: nowrap;
+  }
+  .nav-logo .icon { font-size: 1.3rem; }
+  .nav-links { display: flex; gap: .2rem; overflow-x: auto; }
+  .nav-links a {
+    color: var(--text-muted); text-decoration: none;
+    padding: .35rem .75rem; border-radius: 6px;
+    font-size: .85rem; white-space: nowrap;
+    transition: all .2s;
+  }
+  .nav-links a:hover, .nav-links a.active {
+    color: var(--text); background: rgba(255,255,255,0.07);
+  }
+  .nav-badge {
+    margin-left: auto;
+    background: linear-gradient(135deg, var(--brain), var(--teal));
+    color: white; font-size: .7rem; font-weight: 600;
+    padding: .2rem .65rem; border-radius: 999px; white-space: nowrap;
+  }
+
+  /* ── Hero ── */
+  .hero {
+    position: relative; z-index: 1;
+    padding: 6rem 2rem 4rem;
+    text-align: center; max-width: 900px; margin: 0 auto;
+  }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: .5rem;
+    background: rgba(194,105,42,0.15); border: 1px solid rgba(194,105,42,0.3);
+    color: var(--brain-light); border-radius: 999px;
+    padding: .3rem 1rem; font-size: .8rem; margin-bottom: 1.5rem;
+  }
+  .hero h1 {
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 800; line-height: 1.2;
+    background: linear-gradient(135deg, #fff 0%, var(--brain-light) 50%, var(--teal-light) 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text; margin-bottom: 1rem;
+  }
+  .hero p {
+    font-size: 1.1rem; color: var(--text-muted); max-width: 640px; margin: 0 auto 2.5rem;
+  }
+  .hero-stats {
+    display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap;
+  }
+  .hero-stat {
+    text-align: center;
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 16px; padding: 1.2rem 1.8rem;
+  }
+  .hero-stat .num {
+    font-size: 2rem; font-weight: 800;
+    background: linear-gradient(135deg, var(--brain-light), var(--teal-light));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .hero-stat .label { color: var(--text-muted); font-size: .82rem; margin-top: .2rem; }
+
+  /* ── Section wrapper ── */
+  .section {
+    position: relative; z-index: 1;
+    max-width: 1100px; margin: 0 auto; padding: 3rem 2rem;
+  }
+  .section-title {
+    display: flex; align-items: center; gap: .75rem;
+    font-size: 1.4rem; font-weight: 700; margin-bottom: .5rem;
+  }
+  .section-title .pill {
+    font-size: .7rem; font-weight: 600; padding: .2rem .6rem;
+    border-radius: 999px; letter-spacing: .05em;
+  }
+  .section-sub { color: var(--text-muted); font-size: .9rem; margin-bottom: 2rem; }
+  .divider {
+    border: none; border-top: 1px solid var(--border);
+    margin: 1.5rem 0;
+  }
+
+  /* ── Summary Banner ── */
+  .summary-banner {
+    position: relative; z-index: 1;
+    max-width: 1100px; margin: 0 auto; padding: 0 2rem 1rem;
+  }
+  .banner-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; }
+  .banner-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 16px; padding: 1.5rem;
+    border-left: 3px solid;
+    transition: transform .2s, box-shadow .2s;
+  }
+  .banner-card:hover { transform: translateY(-2px); box-shadow: var(--glow); }
+  .banner-card.blue { border-left-color: var(--brain-light); }
+  .banner-card.teal { border-left-color: var(--teal-light); }
+  .banner-card.amber { border-left-color: #e8b84a; }
+  .banner-card .bc-icon { font-size: 1.6rem; margin-bottom: .5rem; }
+  .banner-card h3 { font-size: .95rem; font-weight: 700; margin-bottom: .4rem; }
+  .banner-card p { font-size: .83rem; color: var(--text-muted); line-height: 1.6; }
+
+  /* ── 14 Risk Factors ── */
+  .risk-intro-box {
+    background: linear-gradient(135deg, rgba(194,105,42,0.15), rgba(184,92,56,0.1));
+    border: 1px solid rgba(194,105,42,0.25);
+    border-radius: 16px; padding: 1.5rem 2rem; margin-bottom: 2rem;
+    display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap;
+  }
+  .risk-big-num {
+    font-size: 4rem; font-weight: 900; line-height: 1;
+    background: linear-gradient(135deg, var(--brain-light), var(--teal-light));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .risk-intro-box p { color: var(--text-muted); font-size: .9rem; flex: 1; min-width: 200px; }
+
+  .phase-group { margin-bottom: 2.5rem; }
+  .phase-label {
+    display: inline-flex; align-items: center; gap: .5rem;
+    font-size: .78rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+    padding: .3rem 1rem; border-radius: 999px; margin-bottom: 1rem;
+  }
+  .phase-label.early { background: rgba(194,105,42,0.15); color: var(--brain-light); border: 1px solid rgba(194,105,42,0.3); }
+  .phase-label.mid { background: rgba(201,154,46,0.15); color: #e8b84a; border: 1px solid rgba(201,154,46,0.3); }
+  .phase-label.late { background: rgba(184,92,56,0.15); color: var(--teal-light); border: 1px solid rgba(184,92,56,0.3); }
+
+  .risk-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1rem; }
+  .risk-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 14px; padding: 1.2rem;
+    transition: all .25s; cursor: default;
+    position: relative; overflow: hidden;
+  }
+  .risk-card::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, transparent 60%, rgba(255,255,255,0.03));
+    pointer-events: none;
+  }
+  .risk-card:hover { transform: translateY(-3px); background: var(--card-hover); box-shadow: 0 8px 30px rgba(0,0,0,0.3); }
+  .risk-card .rc-num {
+    font-size: .7rem; font-weight: 700; color: var(--text-muted);
+    margin-bottom: .4rem; letter-spacing: .05em;
+  }
+  .risk-card .rc-icon { font-size: 1.5rem; margin-bottom: .5rem; }
+  .risk-card h4 { font-size: .95rem; font-weight: 700; margin-bottom: .3rem; }
+  .risk-card .rc-pct {
+    font-size: .75rem; font-weight: 600;
+    padding: .15rem .5rem; border-radius: 999px;
+    display: inline-block; margin-bottom: .5rem;
+  }
+  .risk-card .rc-pct.early { background: rgba(194,105,42,0.2); color: var(--brain-light); }
+  .risk-card .rc-pct.mid   { background: rgba(201,154,46,0.2); color: #e8b84a; }
+  .risk-card .rc-pct.late  { background: rgba(184,92,56,0.2); color: var(--teal-light); }
+  .risk-card .rc-pct.new   { background: rgba(201,64,64,0.2); color: #e07878; }
+  .risk-card p { font-size: .8rem; color: var(--text-muted); line-height: 1.5; }
+  .new-tag {
+    position: absolute; top: .7rem; right: .7rem;
+    font-size: .6rem; font-weight: 700; text-transform: uppercase;
+    background: rgba(201,64,64,0.2); color: #e07878;
+    border: 1px solid rgba(201,64,64,0.3);
+    padding: .1rem .4rem; border-radius: 999px; letter-spacing: .05em;
+  }
+
+  /* ── Intervention Guide ── */
+  .intervention-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.2rem; }
+  .iv-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 16px; padding: 1.5rem;
+    transition: all .25s;
+  }
+  .iv-card:hover { transform: translateY(-3px); box-shadow: 0 8px 30px rgba(0,0,0,0.3); border-color: rgba(220,180,140,0.2); }
+  .iv-header { display: flex; align-items: center; gap: .8rem; margin-bottom: 1rem; }
+  .iv-icon-wrap {
+    width: 46px; height: 46px; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.3rem; flex-shrink: 0;
+  }
+  .iv-card h3 { font-size: 1rem; font-weight: 700; }
+  .iv-card .iv-sub { font-size: .75rem; color: var(--text-muted); }
+  .iv-list { list-style: none; }
+  .iv-list li {
+    display: flex; align-items: flex-start; gap: .6rem;
+    font-size: .82rem; color: var(--text-muted);
+    padding: .4rem 0; border-bottom: 1px solid var(--border);
+    line-height: 1.5;
+  }
+  .iv-list li:last-child { border-bottom: none; }
+  .iv-list li::before { content: '▸'; color: var(--brain-light); flex-shrink: 0; margin-top: .05rem; }
+
+  /* ── Brain Protocol Timeline ── */
+  .timeline { position: relative; padding-left: 1.5rem; }
+  .timeline::before {
+    content: '';
+    position: absolute; left: 0; top: 0; bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--brain), var(--teal));
+    border-radius: 999px;
+  }
+  .tl-item { position: relative; padding: 0 0 2rem 1.5rem; }
+  .tl-dot {
+    position: absolute; left: -1.4rem; top: .3rem;
+    width: 12px; height: 12px; border-radius: 50%;
+    background: var(--brain-light); border: 2px solid var(--bg);
+    box-shadow: 0 0 12px var(--brain-light);
+  }
+  .tl-time {
+    font-size: .72rem; font-weight: 700; letter-spacing: .06em;
+    color: var(--brain-light); text-transform: uppercase; margin-bottom: .3rem;
+  }
+  .tl-item h4 { font-size: .95rem; font-weight: 700; margin-bottom: .4rem; }
+  .tl-item p { font-size: .83rem; color: var(--text-muted); line-height: 1.6; }
+
+  /* ── Pyramid ── */
+  .pyramid-wrap {
+    display: flex; flex-direction: column; align-items: center;
+    gap: .5rem; margin: 1.5rem auto; max-width: 600px;
+  }
+  .pyramid-row {
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 12px; padding: .7rem 1.2rem;
+    font-size: .85rem; font-weight: 600; text-align: center;
+    transition: transform .2s;
+    cursor: default;
+  }
+  .pyramid-row:hover { transform: scale(1.02); }
+  .pyramid-row .pr-icon { margin-right: .5rem; font-size: 1rem; }
+
+  /* ── Tabs ── */
+  .tabs { display: flex; gap: .5rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+  .tab-btn {
+    padding: .45rem 1rem; border-radius: 8px; font-size: .83rem; font-weight: 600;
+    border: 1px solid var(--border); background: transparent; color: var(--text-muted);
+    cursor: pointer; transition: all .2s;
+  }
+  .tab-btn.active { background: var(--brain); border-color: var(--brain); color: white; }
+  .tab-btn:hover:not(.active) { background: rgba(255,255,255,0.06); color: var(--text); }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* ── Info Table ── */
+  .info-table { width: 100%; border-collapse: collapse; font-size: .85rem; }
+  .info-table th {
+    background: rgba(194,105,42,0.1); color: var(--brain-light);
+    padding: .75rem 1rem; text-align: left; font-size: .78rem;
+    letter-spacing: .05em; text-transform: uppercase;
+    border-bottom: 1px solid var(--border);
+  }
+  .info-table td { padding: .7rem 1rem; border-bottom: 1px solid var(--border); color: var(--text-muted); }
+  .info-table tr:last-child td { border-bottom: none; }
+  .info-table tr:hover td { background: rgba(255,255,255,0.03); color: var(--text); }
+  .info-table .tag {
+    display: inline-block; font-size: .68rem; font-weight: 600;
+    padding: .1rem .45rem; border-radius: 999px;
+  }
+
+  /* ── Progress bar ── */
+  .progress-item { margin-bottom: 1rem; }
+  .progress-top { display: flex; justify-content: space-between; margin-bottom: .3rem; font-size: .83rem; }
+  .progress-label { font-weight: 600; }
+  .progress-pct { color: var(--text-muted); }
+  .progress-bar {
+    height: 8px; background: rgba(255,255,255,0.08); border-radius: 999px; overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%; border-radius: 999px;
+    background: linear-gradient(90deg, var(--brain), var(--teal-light));
+    transition: width 1s ease;
+  }
+
+  /* ── Music Player ── */
+  .music-player {
+    position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 200;
+    display: flex; align-items: center; gap: .75rem;
+    background: rgba(28,16,8,0.85);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(220,180,140,0.15);
+    border-radius: 999px; padding: .5rem .9rem .5rem .5rem;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+    transition: all .3s;
+  }
+  .music-player:hover { border-color: rgba(129,140,248,0.4); }
+  .music-btn {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--brain), var(--teal));
+    border: none; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem; color: white; flex-shrink: 0;
+    transition: transform .2s, box-shadow .2s;
+  }
+  .music-btn:hover { transform: scale(1.1); box-shadow: 0 0 16px rgba(194,105,42,0.5); }
+  .music-info { display: flex; flex-direction: column; gap: .1rem; }
+  .music-title { font-size: .78rem; font-weight: 600; color: var(--text); white-space: nowrap; }
+  .music-status { font-size: .68rem; color: var(--text-muted); }
+  .music-vol {
+    -webkit-appearance: none; appearance: none;
+    width: 60px; height: 4px; border-radius: 999px;
+    background: rgba(255,255,255,0.15); outline: none; cursor: pointer;
+  }
+  .music-vol::-webkit-slider-thumb {
+    -webkit-appearance: none; width: 12px; height: 12px;
+    border-radius: 50%; background: var(--brain-light); cursor: pointer;
+  }
+  @keyframes pulse-ring {
+    0% { box-shadow: 0 0 0 0 rgba(194,105,42,0.5); }
+    70% { box-shadow: 0 0 0 8px rgba(194,105,42,0); }
+    100% { box-shadow: 0 0 0 0 rgba(194,105,42,0); }
+  }
+  .music-btn.playing { animation: pulse-ring 2s ease infinite; }
+
+  /* ── Footer ── */
+  footer {
+    position: relative; z-index: 1;
+    border-top: 1px solid var(--border);
+    padding: 2rem; text-align: center;
+    color: var(--text-muted); font-size: .8rem;
+  }
+  footer a { color: var(--brain-light); text-decoration: none; }
+
+  /* ── Responsive ── */
+  @media (max-width: 600px) {
+    nav { padding: 0 1rem; gap: 1rem; }
+    .hero { padding: 3rem 1rem 2rem; }
+    .section, .summary-banner { padding: 2rem 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#top">
+    <span class="icon">🧠</span>記憶保衛戰
+  </a>
+  <div class="nav-links">
+    <a href="#overview" class="active">總覽</a>
+    <a href="#risk14">14大危險因子</a>
+    <a href="#interventions">黃金干預</a>
+    <a href="#protocol">每日計畫</a>
+    <a href="#research">研究證據</a>
+  </div>
+  <div class="nav-badge">Lancet 2024</div>
+</nav>
+
+<!-- HERO -->
+<div class="hero" id="top">
+  <div class="hero-badge">🔬 基於最新醫學實證 · 同梯讀書會</div>
+  <h1>守護大腦的<br>黃金干預指南</h1>
+  <p>整合 Lancet 2024 失智症委員會、FINGER 試驗等頂尖研究，<br>為您解析失智預防的完整知識體系。</p>
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <div class="num">45%</div>
+      <div class="label">可預防的失智比例</div>
+    </div>
+    <div class="hero-stat">
+      <div class="num">14</div>
+      <div class="label">可調控危險因子</div>
+    </div>
+    <div class="hero-stat">
+      <div class="num">25%</div>
+      <div class="label">多重干預降低認知衰退</div>
+    </div>
+    <div class="hero-stat">
+      <div class="num">5,500萬</div>
+      <div class="label">全球失智人口</div>
+    </div>
+  </div>
+</div>
+
+<!-- OVERVIEW BANNERS -->
+<div class="summary-banner" id="overview">
+  <div class="banner-grid">
+    <div class="banner-card blue">
+      <div class="bc-icon">📕</div>
+      <h3>逆轉失智：十四大危險因子</h3>
+      <p>Lancet 2024 確認 14 個可調控因子，若全面干預，可預防或延緩多達 <strong>45%</strong> 的失智症案例。從幼年到晚年，每個人生階段都有機會介入。</p>
+    </div>
+    <div class="banner-card teal">
+      <div class="bc-icon">🛡️</div>
+      <h3>記憶保衛戰：黃金干預指南</h3>
+      <p>整合運動、飲食、認知訓練、社交互動、睡眠管理五大領域，形成多模態生活干預策略，有效保護大腦神經可塑性。</p>
+    </div>
+    <div class="banner-card amber">
+      <div class="bc-icon">⚙️</div>
+      <h3>大腦防衛機制：多重生活干預</h3>
+      <p>FINGER 試驗等多國研究顯示，整合性生活干預可使認知衰退速度降低 <strong>25%</strong>，並提升大腦儲備能力（Cognitive Reserve）。</p>
+    </div>
+  </div>
+</div>
+
+<!-- 14 RISK FACTORS -->
+<div class="section" id="risk14">
+  <div class="section-title">
+    ⚠️ 十四大危險因子
+    <span class="pill" style="background:rgba(201,64,64,0.15);color:#e07878;border:1px solid rgba(201,64,64,0.3)">Lancet 2024</span>
+  </div>
+  <p class="section-sub">依人生三階段分類，各因子對應可預防的失智症比例（人口歸因分率，PAF）</p>
+
+  <div class="risk-intro-box">
+    <div class="risk-big-num">45%</div>
+    <p>這 14 個危險因子合計可解釋 <strong>45%</strong> 的失智症案例。這意味著，若我們在人生各階段積極介入，幾乎有一半的失智症是可以預防或顯著延緩的。新增的 <strong>視力損失</strong> 與 <strong>高 LDL 膽固醇</strong> 為 2024 年報告首次納入。</p>
+  </div>
+
+  <!-- 早年 -->
+  <div class="phase-group">
+    <div class="phase-label early">🌱 早年（Early Life）</div>
+    <div class="risk-grid">
+      <div class="risk-card">
+        <div class="rc-num">01</div>
+        <div class="rc-icon">📚</div>
+        <h4>教育程度不足</h4>
+        <span class="rc-pct early">PAF ≈ 5%</span>
+        <p>教育能建立大腦儲備（cognitive reserve），推遲認知衰退症狀出現的時間。終身學習可持續補償。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 中年 -->
+  <div class="phase-group">
+    <div class="phase-label mid">⚡ 中年（Midlife · 45–65 歲）</div>
+    <div class="risk-grid">
+      <div class="risk-card">
+        <div class="rc-num">02</div>
+        <div class="rc-icon">👂</div>
+        <h4>聽力損失</h4>
+        <span class="rc-pct mid">PAF ≈ 7%</span>
+        <p>聽力受損導致社交隔離與認知負荷增加。配戴助聽器可顯著降低風險。</p>
+      </div>
+      <div class="risk-card">
+        <div class="rc-num">03</div>
+        <div class="rc-icon">🩺</div>
+        <h4>高血壓</h4>
+        <span class="rc-pct mid">PAF ≈ 2%</span>
+        <p>中年高血壓損傷腦血管，加速白質病變。控制血壓可直接保護神經組織。</p>
+      </div>
+      <div class="risk-card">
+        <div class="rc-num">04</div>
+        <div class="rc-icon">⚖️</div>
+        <h4>肥胖</h4>
+        <span class="rc-pct mid">PAF ≈ 1%</span>
+        <p>BMI ≥ 30 與腦部萎縮及炎症相關，特別影響海馬迴體積。</p>
+      </div>
+      <div class="risk-card">
+        <div class="rc-num">05</div>
+        <div class="rc-icon">🍺</div>
+        <h4>過度飲酒</h4>
+        <span class="rc-pct mid">PAF ≈ 1%</span>
+        <p>每周超過 14 單位酒精（每單位≈10g）與失智風險顯著相關，神經毒性直接損傷腦組織。</p>
+      </div>
+      <div class="risk-card">
+        <div class="rc-num">06</div>
+        <div class="rc-icon">🤕</div>
+        <h4>頭部外傷</h4>
+        <span class="rc-pct mid">PAF ≈ 3%</span>
+        <p>中度至重度頭部外傷顯著增加失智風險，tau 蛋白異常沉積與神經炎症是主要機制。</p>
+      </div>
+      <div class="risk-card">
+        <div class="rc-num">07</div>
+        <div class="rc-icon">💊</div>
+        <h4>高 LDL 膽固醇</h4>
+        <span class="rc-pct new">2024 新增 PAF ≈ 7%</span>
+        <div class="new-tag">NEW</div>
+        <p>中年高 LDL 與澱粉樣蛋白沉積相關。他汀類藥物及飲食控制可降低風險。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 晚年 -->
+  <div class="phase-group">
+    <div class="phase-label late">🌿 晚年（Late Life · 65 歲以上）</div>
+    <div class="risk-grid">
+      <div class="risk-card">
+        <div class="rc-num">08</div>
+        <div class="rc-icon">🌫️</div>
+        <h4>空氣污染</h4>
+        <span class="rc-pct late">PAF ≈ 3%</span>
+        <p>PM2.5 與氮氧化物經嗅神經進入大腦，引發神經炎症，增加失智與帕金森風險。</p>
+      </div>
+      <div class="risk-card">
+        <div class="rc-num">09</div>
+        <div class="rc-icon">😔</div>
+        <h4>憂鬱症</h4>
+        <span class="rc-pct late">PAF ≈ 2%</span>
+        <p>長期憂鬱使皮質醇升高，損傷海馬迴神經元，並常導致社交退縮與認知不活躍。</p>
+      </div>
+      <div class="risk-card">
+        <div class="rc-num">10</div>
+        <div class="rc-icon">🪑</div>
+        <h4>身體不活動</h4>
+        <span class="rc-pct late">PAF ≈ 2%</span>
+        <p>有氧運動促進 BDNF 分泌，增加海馬迴體積，是目前最有力的非藥物預防策略之一。</p>
+      </div>
+      <div class="risk-card">
+        <div class="rc-num">11</div>
+        <div class="rc-icon">🚬</div>
+        <h4>吸菸</h4>
+        <span class="rc-pct late">PAF ≈ 2%</span>
+        <p>吸菸加速腦血管病變，並增加氧化壓力。戒菸後風險可逐漸降回接近正常水準。</p>
+      </div>
+      <div class="risk-card">
+        <div class="rc-num">12</div>
+        <div class="rc-icon">🧍</div>
+        <h4>社交孤立</h4>
+        <span class="rc-pct late">PAF ≈ 5%</span>
+        <p>社交互動是對大腦最自然的多模態刺激，孤立減少神經活化，加速認知衰退。</p>
+      </div>
+      <div class="risk-card">
+        <div class="rc-num">13</div>
+        <div class="rc-icon">🩸</div>
+        <h4>糖尿病</h4>
+        <span class="rc-pct late">PAF ≈ 2%</span>
+        <p>胰島素阻抗影響大腦葡萄糖代謝，與 β-澱粉樣蛋白及 tau 蛋白異常密切相關。失智症有時被稱為「第三型糖尿病」。</p>
+      </div>
+      <div class="risk-card">
+        <div class="rc-num">14</div>
+        <div class="rc-icon">👁️</div>
+        <h4>視力損失</h4>
+        <span class="rc-pct new">2024 新增 PAF ≈ 2%</span>
+        <div class="new-tag">NEW</div>
+        <p>未矯正視力損失增加跌倒風險與社交退縮，並可能反映共同的血管或神經退化病理。</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- INTERVENTIONS -->
+<div class="section" id="interventions">
+  <div class="section-title">
+    🛡️ 黃金干預策略
+    <span class="pill" style="background:rgba(184,92,56,0.15);color:var(--teal-light);border:1px solid rgba(184,92,56,0.3)">五大領域</span>
+  </div>
+  <p class="section-sub">整合多模態生活干預，建構大腦全方位防護網</p>
+
+  <div class="intervention-grid">
+    <!-- 運動 -->
+    <div class="iv-card">
+      <div class="iv-header">
+        <div class="iv-icon-wrap" style="background:rgba(194,105,42,0.15)">🏃</div>
+        <div>
+          <h3>有氧運動</h3>
+          <div class="iv-sub">最強效的神經保護策略</div>
+        </div>
+      </div>
+      <ul class="iv-list">
+        <li>每周 150 分鐘中強度有氧（快走、游泳、騎車）</li>
+        <li>促進 BDNF 分泌，增加海馬迴體積最高 2%</li>
+        <li>改善腦血流灌注，清除代謝廢物</li>
+        <li>搭配阻力訓練，每周 2 次肌力訓練</li>
+        <li>太極拳、瑜伽可額外改善平衡與專注</li>
+      </ul>
+    </div>
+
+    <!-- 飲食 -->
+    <div class="iv-card">
+      <div class="iv-header">
+        <div class="iv-icon-wrap" style="background:rgba(184,92,56,0.15)">🥗</div>
+        <div>
+          <h3>地中海 / MIND 飲食</h3>
+          <div class="iv-sub">抗發炎、保護神經</div>
+        </div>
+      </div>
+      <ul class="iv-list">
+        <li>每天 ≥ 5 份蔬果，特別是深色葉菜</li>
+        <li>每周 ≥ 2 次魚類（富含 Omega-3）</li>
+        <li>橄欖油為主要油脂，減少飽和脂肪</li>
+        <li>漿果類（藍莓、草莓）富含花青素保護神經</li>
+        <li>限制紅肉、加工食品、糖分攝取</li>
+      </ul>
+    </div>
+
+    <!-- 認知訓練 -->
+    <div class="iv-card">
+      <div class="iv-header">
+        <div class="iv-icon-wrap" style="background:rgba(201,154,46,0.15)">🧩</div>
+        <div>
+          <h3>認知訓練</h3>
+          <div class="iv-sub">建立大腦儲備</div>
+        </div>
+      </div>
+      <ul class="iv-list">
+        <li>學習新技能：樂器、外語、繪畫</li>
+        <li>閱讀、書寫、下棋等高認知活動</li>
+        <li>雙語或多語能力提供保護效果</li>
+        <li>針對性認知訓練程式（記憶、處理速度）</li>
+        <li>避免過度依賴數位輔助，保持主動思考</li>
+      </ul>
+    </div>
+
+    <!-- 社交 -->
+    <div class="iv-card">
+      <div class="iv-header">
+        <div class="iv-icon-wrap" style="background:rgba(201,64,64,0.12)">👥</div>
+        <div>
+          <h3>社交互動</h3>
+          <div class="iv-sub">天然的多模態刺激</div>
+        </div>
+      </div>
+      <ul class="iv-list">
+        <li>維持豐富的人際關係網絡</li>
+        <li>參與社區、志工或宗教活動</li>
+        <li>讀書會、合唱、舞蹈等群體活動</li>
+        <li>視訊仍有效，但面對面互動效果更佳</li>
+        <li>主動避免孤立，照顧者需特別注意自身社交</li>
+      </ul>
+    </div>
+
+    <!-- 睡眠 -->
+    <div class="iv-card">
+      <div class="iv-header">
+        <div class="iv-icon-wrap" style="background:rgba(194,130,80,0.15)">😴</div>
+        <div>
+          <h3>睡眠管理</h3>
+          <div class="iv-sub">大腦的清潔時間</div>
+        </div>
+      </div>
+      <ul class="iv-list">
+        <li>每晚 7–8 小時高品質睡眠</li>
+        <li>深度睡眠期間類淋巴系統清除 β-澱粉樣蛋白</li>
+        <li>積極治療睡眠呼吸中止症（OSA）</li>
+        <li>固定作息、限制藍光、睡前不飲酒</li>
+        <li>午睡 20–30 分鐘可補充認知恢復</li>
+      </ul>
+    </div>
+
+    <!-- 血管管理 -->
+    <div class="iv-card">
+      <div class="iv-header">
+        <div class="iv-icon-wrap" style="background:rgba(122,158,90,0.15)">❤️</div>
+        <div>
+          <h3>血管風險管理</h3>
+          <div class="iv-sub">心臟好，大腦才好</div>
+        </div>
+      </div>
+      <ul class="iv-list">
+        <li>控制血壓：目標 &lt; 130/80 mmHg</li>
+        <li>控制血糖：HbA1c &lt; 7%（糖尿病患者）</li>
+        <li>控制 LDL 膽固醇：必要時藥物輔助</li>
+        <li>戒菸：任何時間點戒菸均有效</li>
+        <li>避免過量飲酒：男性 &lt; 2 杯/天</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- DAILY PROTOCOL -->
+<div class="section" id="protocol">
+  <div class="section-title">
+    📅 每日大腦保護計畫
+    <span class="pill" style="background:rgba(122,158,90,0.15);color:#98c47a;border:1px solid rgba(122,158,90,0.3)">實作指南</span>
+  </div>
+  <p class="section-sub">將科學研究轉化為可執行的日常行動</p>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:2rem;align-items:start">
+    <div>
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-time">早上 6–8 時</div>
+          <h4>🌅 晨間啟動</h4>
+          <p>固定時間起床（維持生理時鐘）。晨光照射 15 分鐘調節褪黑激素。早餐攝取蛋白質 + 複合碳水化合物，穩定血糖。</p>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot" style="background:var(--teal-light);box-shadow:0 0 12px var(--teal-light)"></div>
+          <div class="tl-time">上午 9–11 時</div>
+          <h4>🧠 認知黃金期</h4>
+          <p>大腦皮質醇與注意力達到一天高峰。適合進行學習、閱讀、解題等高認知負荷活動。</p>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot" style="background:#e8b84a;box-shadow:0 0 12px #e8b84a"></div>
+          <div class="tl-time">中午 12–13 時</div>
+          <h4>🥗 地中海午餐</h4>
+          <p>蔬菜、豆類、全穀為主。避免高GI食物導致下午血糖驟降與認知遲鈍。可進行 20 分鐘輕度午睡。</p>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot" style="background:#f97316;box-shadow:0 0 12px #f97316"></div>
+          <div class="tl-time">下午 15–17 時</div>
+          <h4>🏃 有氧運動時段</h4>
+          <p>下午為運動表現高峰。進行 30–45 分鐘中強度有氧運動。也是阻力訓練的最佳時窗。</p>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot" style="background:#a78bfa;box-shadow:0 0 12px #a78bfa"></div>
+          <div class="tl-time">晚上 18–20 時</div>
+          <h4>👥 社交與文化活動</h4>
+          <p>與家人、朋友共餐互動。讀書會、棋藝、音樂欣賞等文化活動。避免獨自長時間滑手機。</p>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot" style="background:#60a5fa;box-shadow:0 0 12px #60a5fa"></div>
+          <div class="tl-time">晚上 21–22 時</div>
+          <h4>😴 睡眠準備程序</h4>
+          <p>減少藍光暴露，環境降溫至 18–20°C。可進行冥想或正念練習。目標 10:30 前入睡，確保 7–8 小時睡眠。</p>
+        </div>
+      </div>
+    </div>
+    <div>
+      <h3 style="font-size:.95rem;font-weight:700;margin-bottom:1.2rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em">週間活動強度建議</h3>
+      <div class="progress-item">
+        <div class="progress-top"><span class="progress-label">有氧運動</span><span class="progress-pct">150 分鐘/週</span></div>
+        <div class="progress-bar"><div class="progress-fill" style="width:90%"></div></div>
+      </div>
+      <div class="progress-item">
+        <div class="progress-top"><span class="progress-label">阻力訓練</span><span class="progress-pct">2 次/週</span></div>
+        <div class="progress-bar"><div class="progress-fill" style="width:70%"></div></div>
+      </div>
+      <div class="progress-item">
+        <div class="progress-top"><span class="progress-label">認知訓練</span><span class="progress-pct">每日 20–30 分鐘</span></div>
+        <div class="progress-bar"><div class="progress-fill" style="width:80%"></div></div>
+      </div>
+      <div class="progress-item">
+        <div class="progress-top"><span class="progress-label">社交互動</span><span class="progress-pct">每日</span></div>
+        <div class="progress-bar"><div class="progress-fill" style="width:85%"></div></div>
+      </div>
+      <div class="progress-item">
+        <div class="progress-top"><span class="progress-label">睡眠品質</span><span class="progress-pct">7–8 小時/晚</span></div>
+        <div class="progress-bar"><div class="progress-fill" style="width:95%"></div></div>
+      </div>
+      <div class="progress-item">
+        <div class="progress-top"><span class="progress-label">蔬果攝取</span><span class="progress-pct">5+ 份/天</span></div>
+        <div class="progress-bar"><div class="progress-fill" style="width:75%"></div></div>
+      </div>
+
+      <hr class="divider" style="margin:1.5rem 0">
+
+      <h3 style="font-size:.95rem;font-weight:700;margin-bottom:1rem">⚠️ 需要立即評估的警訊</h3>
+      <div style="display:flex;flex-direction:column;gap:.5rem">
+        <div style="background:rgba(201,64,64,0.08);border:1px solid rgba(201,64,64,0.2);border-radius:10px;padding:.75rem 1rem;font-size:.82rem;color:var(--text-muted)">
+          🔴 <strong style="color:#e07878">記憶力</strong>：重複詢問同一問題、忘記重要約定
+        </div>
+        <div style="background:rgba(201,64,64,0.08);border:1px solid rgba(201,64,64,0.2);border-radius:10px;padding:.75rem 1rem;font-size:.82rem;color:var(--text-muted)">
+          🔴 <strong style="color:#e07878">語言</strong>：找不到適當的詞彙、句子不完整
+        </div>
+        <div style="background:rgba(201,154,46,0.08);border:1px solid rgba(201,154,46,0.2);border-radius:10px;padding:.75rem 1rem;font-size:.82rem;color:var(--text-muted)">
+          🟡 <strong style="color:#e8b84a">定向感</strong>：在熟悉環境中迷路、不知日期
+        </div>
+        <div style="background:rgba(201,154,46,0.08);border:1px solid rgba(201,154,46,0.2);border-radius:10px;padding:.75rem 1rem;font-size:.82rem;color:var(--text-muted)">
+          🟡 <strong style="color:#e8b84a">判斷力</strong>：財務決策失誤、個人衛生退步
+        </div>
+        <div style="background:rgba(122,158,90,0.08);border:1px solid rgba(122,158,90,0.2);border-radius:10px;padding:.75rem 1rem;font-size:.82rem;color:var(--text-muted)">
+          🟢 <strong style="color:#98c47a">正常老化</strong>：偶爾忘記名字但之後想起、處理速度稍慢
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- RESEARCH EVIDENCE -->
+<div class="section" id="research">
+  <div class="section-title">
+    🔬 關鍵研究證據
+    <span class="pill" style="background:rgba(194,105,42,0.15);color:var(--brain-light);border:1px solid rgba(194,105,42,0.3)">實證基礎</span>
+  </div>
+  <p class="section-sub">支持失智預防策略的里程碑研究</p>
+
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab(this,'t1')">重要研究</button>
+    <button class="tab-btn" onclick="switchTab(this,'t2')">大腦儲備理論</button>
+    <button class="tab-btn" onclick="switchTab(this,'t3')">常見 Q&A</button>
+  </div>
+
+  <div class="tab-panel active" id="t1">
+    <table class="info-table">
+      <thead>
+        <tr>
+          <th>研究名稱</th>
+          <th>國家 / 年份</th>
+          <th>核心發現</th>
+          <th>干預類型</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Lancet Commission on Dementia</strong></td>
+          <td>全球 / 2024</td>
+          <td>確認 14 個可修正危險因子，PAF 合計 45%</td>
+          <td><span class="tag" style="background:rgba(194,105,42,0.2);color:var(--brain-light)">流行病學</span></td>
+        </tr>
+        <tr>
+          <td><strong>FINGER Trial</strong></td>
+          <td>芬蘭 / 2015–</td>
+          <td>多模態干預（運動+飲食+認知+血管管理）使認知衰退降低 25%</td>
+          <td><span class="tag" style="background:rgba(184,92,56,0.2);color:var(--teal-light)">隨機對照</span></td>
+        </tr>
+        <tr>
+          <td><strong>SPRINT MIND</strong></td>
+          <td>美國 / 2019</td>
+          <td>積極降血壓（目標 &lt;120）顯著降低輕度認知障礙風險</td>
+          <td><span class="tag" style="background:rgba(184,92,56,0.2);color:var(--teal-light)">隨機對照</span></td>
+        </tr>
+        <tr>
+          <td><strong>MIND Diet Study</strong></td>
+          <td>美國 / 2015</td>
+          <td>嚴格遵循 MIND 飲食者認知年齡平均年輕 7.5 歲</td>
+          <td><span class="tag" style="background:rgba(201,154,46,0.2);color:#e8b84a">觀察研究</span></td>
+        </tr>
+        <tr>
+          <td><strong>運動與海馬迴體積</strong></td>
+          <td>美國 / 2011</td>
+          <td>Erickson et al.: 有氧運動一年使海馬迴體積增加 2%，逆轉老化萎縮</td>
+          <td><span class="tag" style="background:rgba(184,92,56,0.2);color:var(--teal-light)">隨機對照</span></td>
+        </tr>
+        <tr>
+          <td><strong>MAPT Trial</strong></td>
+          <td>法國 / 2017</td>
+          <td>Omega-3 + 多模態干預在高風險族群中顯示認知保護效果</td>
+          <td><span class="tag" style="background:rgba(184,92,56,0.2);color:var(--teal-light)">隨機對照</span></td>
+        </tr>
+        <tr>
+          <td><strong>助聽器與失智</strong></td>
+          <td>多國 / 2023</td>
+          <td>Hearing Intervention vs. Control: 高風險老年人使用助聽器使失智風險降低 48%</td>
+          <td><span class="tag" style="background:rgba(184,92,56,0.2);color:var(--teal-light)">隨機對照</span></td>
+        </tr>
+        <tr>
+          <td><strong>睡眠與 Aβ 清除</strong></td>
+          <td>美國 / 2019</td>
+          <td>一晚睡眠剝奪使腦脊髓液中 Aβ 40 增加約 25%</td>
+          <td><span class="tag" style="background:rgba(201,154,46,0.2);color:#e8b84a">觀察研究</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="tab-panel" id="t2">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;align-items:start">
+      <div>
+        <h3 style="margin-bottom:1rem;font-size:1rem">大腦儲備（Brain Reserve）理論</h3>
+        <p style="font-size:.85rem;color:var(--text-muted);margin-bottom:1rem;line-height:1.7">
+          大腦儲備是指大腦抵抗病理損傷、維持認知功能的能力。分為兩種形式：
+        </p>
+        <div class="pyramid-wrap">
+          <div class="pyramid-row" style="width:100%;background:linear-gradient(135deg,rgba(194,105,42,0.2),rgba(194,105,42,0.3))">
+            <span class="pr-icon">🧠</span>
+            認知功能正常（儲備充足）
+          </div>
+          <div class="pyramid-row" style="width:90%;background:rgba(201,154,46,0.15);font-size:.8rem">
+            <span class="pr-icon">⚡</span>
+            輕度認知障礙 MCI（儲備消耗中）
+          </div>
+          <div class="pyramid-row" style="width:80%;background:rgba(201,64,64,0.12);font-size:.8rem">
+            <span class="pr-icon">⚠️</span>
+            失智症（儲備耗盡，病理顯現）
+          </div>
+          <div class="pyramid-row" style="width:70%;background:rgba(201,64,64,0.2);font-size:.75rem;color:#e07878">
+            病理損傷累積（Aβ、Tau、血管病變）
+          </div>
+        </div>
+      </div>
+      <div>
+        <h3 style="margin-bottom:1rem;font-size:1rem">如何建立大腦儲備</h3>
+        <div style="display:flex;flex-direction:column;gap:.75rem">
+          <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1rem">
+            <div style="font-weight:700;margin-bottom:.3rem;font-size:.9rem">📐 結構性儲備</div>
+            <p style="font-size:.8rem;color:var(--text-muted)">神經元數量、突觸密度、大腦體積。受遺傳影響，但運動可增加海馬迴體積。</p>
+          </div>
+          <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1rem">
+            <div style="font-weight:700;margin-bottom:.3rem;font-size:.9rem">🔄 功能性儲備（Neural Reserve）</div>
+            <p style="font-size:.8rem;color:var(--text-muted)">大腦的效率與彈性，面對損傷時啟用替代神經迴路的能力。教育、終身學習是主要驅動力。</p>
+          </div>
+          <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1rem">
+            <div style="font-weight:700;margin-bottom:.3rem;font-size:.9rem">🌐 認知儲備（Cognitive Reserve）</div>
+            <p style="font-size:.8rem;color:var(--text-muted)">整合前兩者，是最廣泛使用的概念。高認知儲備者病理損傷更重才會出現症狀，症狀出現後進展也較快。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tab-panel" id="t3">
+    <div style="display:flex;flex-direction:column;gap:1rem">
+      <details style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1rem 1.2rem">
+        <summary style="cursor:pointer;font-weight:700;font-size:.92rem;list-style:none">
+          ▸ &nbsp;已確診輕度認知障礙（MCI），還能逆轉嗎？
+        </summary>
+        <p style="margin-top:.8rem;font-size:.83rem;color:var(--text-muted);line-height:1.7">
+          MCI 並非不可逆。研究顯示，約 15–40% 的 MCI 患者在生活方式介入後可恢復到正常認知狀態。關鍵在於盡早開始多模態干預（運動＋飲食＋認知訓練＋血管管理），並積極治療可逆因素（如睡眠呼吸中止、甲狀腺功能低下、維生素 B12 缺乏）。
+        </p>
+      </details>
+      <details style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1rem 1.2rem">
+        <summary style="cursor:pointer;font-weight:700;font-size:.92rem;list-style:none">
+          ▸ &nbsp;基因（APOE ε4）決定了一切嗎？
+        </summary>
+        <p style="margin-top:.8rem;font-size:.83rem;color:var(--text-muted);line-height:1.7">
+          APOE ε4 基因使阿茲海默症風險提高 3–4 倍（兩個等位基因則為 8–12 倍），但它不是命運。研究顯示，具有 APOE ε4 的人若積極進行生活方式干預，仍可顯著降低風險。環境因素與生活方式對基因的影響力甚至超過基因本身，特別是在 65 歲前。
+        </p>
+      </details>
+      <details style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1rem 1.2rem">
+        <summary style="cursor:pointer;font-weight:700;font-size:.92rem;list-style:none">
+          ▸ &nbsp;補充品有效嗎？（銀杏、魚油、薑黃素）
+        </summary>
+        <p style="margin-top:.8rem;font-size:.83sem;color:var(--text-muted);line-height:1.7">
+          目前大型隨機對照試驗中，<strong>銀杏葉</strong>未顯示顯著預防效果；<strong>魚油（DHA/EPA）</strong>在高風險族群（特別是 APOE ε4 攜帶者）顯示初步益處，但證據尚不充分；<strong>薑黃素</strong>動物研究正面但人體試驗結果不一致。目前最強的證據仍支持「生活方式干預」而非單一補充品。
+        </p>
+      </details>
+      <details style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1rem 1.2rem">
+        <summary style="cursor:pointer;font-weight:700;font-size:.92rem;list-style:none">
+          ▸ &nbsp;幾歲開始預防才算早？
+        </summary>
+        <p style="margin-top:.8rem;font-size:.83rem;color:var(--text-muted);line-height:1.7">
+          越早越好，但任何年齡開始都不嫌晚。研究顯示阿茲海默症的病理變化（Aβ 沉積）最早可在<strong>症狀出現前 20 年</strong>開始。這意味著 40 多歲就應開始積極管理危險因子。但即使是 70–80 歲才開始運動和學習新技能，仍可顯著降低失智風險並改善現有認知功能。
+        </p>
+      </details>
+    </div>
+  </div>
+</div>
+
+<!-- MUSIC PLAYER -->
+<div class="music-player">
+  <button class="music-btn" id="musicBtn" onclick="toggleMusic()" title="播放/暫停">▶</button>
+  <div class="music-info">
+    <div class="music-title">記憶之路</div>
+    <div class="music-status" id="musicStatus">點擊播放</div>
+  </div>
+  <input type="range" class="music-vol" id="volSlider" min="0" max="1" step="0.05" value="0.4" oninput="setVol(this.value)" title="音量">
+</div>
+<audio id="bgMusic" loop preload="auto">
+  <source src="记忆之路.mp3" type="audio/mpeg">
+</audio>
+
+<!-- FOOTER -->
+<footer>
+  <p>📚 知識來源：Lancet Commission on Dementia Prevention, Intervention, and Care (2024) · FINGER Trial · SPRINT MIND · Erickson et al. 2011</p>
+  <p style="margin-top:.5rem">同梯讀書會 · 失智預防知識館 · 僅供學術討論，醫療決策請諮詢專業醫師</p>
+</footer>
+
+<script>
+function switchTab(btn, panelId) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById(panelId).classList.add('active');
+}
+
+// Smooth scroll
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+});
+
+// Active nav on scroll
+const sections = ['overview','risk14','interventions','protocol','research'];
+const navLinks = document.querySelectorAll('.nav-links a');
+window.addEventListener('scroll', () => {
+  let current = 'overview';
+  sections.forEach(id => {
+    const el = document.getElementById(id);
+    if (el && window.scrollY >= el.offsetTop - 100) current = id;
+  });
+  navLinks.forEach(a => {
+    a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+  });
+});
+
+// Music player
+const audio = document.getElementById('bgMusic');
+const btn   = document.getElementById('musicBtn');
+const status = document.getElementById('musicStatus');
+audio.volume = 0.4;
+
+function toggleMusic() {
+  if (audio.paused) {
+    audio.play().then(() => {
+      btn.textContent = '⏸';
+      btn.classList.add('playing');
+      status.textContent = '播放中…';
+    }).catch(() => { status.textContent = '無法自動播放'; });
+  } else {
+    audio.pause();
+    btn.textContent = '▶';
+    btn.classList.remove('playing');
+    status.textContent = '已暫停';
+  }
+}
+function setVol(v) { audio.volume = parseFloat(v); }
+
+// Animate progress bars on scroll
+const bars = document.querySelectorAll('.progress-fill');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      const w = e.target.style.width;
+      e.target.style.width = '0';
+      setTimeout(() => { e.target.style.width = w; }, 100);
+    }
+  });
+}, { threshold: 0.3 });
+bars.forEach(b => observer.observe(b));
+</script>
+</body>
+</html>
